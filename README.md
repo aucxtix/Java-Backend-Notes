@@ -2119,3 +2119,178 @@ As reviewed in `Day3/.../CoreJavaNotes`:
 3. **How does the analogy map to the actual implementation?** The Java compiler verifies call sites against package declarations and access flags stored in `.class` bytecode constant pools.
 
 ---
+
+## 15. Connecting the Dots: From Core Java to Spring Boot Architecture
+
+### 15.1 The Enterprise Backend Mapping
+
+Every single high-level abstraction in modern Spring Boot, Hibernate/JPA, and microservices directly maps back to the Core Java fundamentals mastered in this workspace:
+
+```mermaid
+flowchart TD
+    subgraph CoreJavaFundamentals["Core Java Fundamentals"]
+        CJ_Class["Java Classes & Fields"]
+        CJ_Encapsulation["Encapsulation (POJO / JavaBeans)"]
+        CJ_Interface["Interfaces & Abstraction"]
+        CJ_Polymorphism["Polymorphism & Dynamic Dispatch"]
+        CJ_Inheritance["Inheritance & Object Root"]
+        CJ_ClassLoader["ClassLoader & Metaspace"]
+        CJ_StackHeap["Stack vs Heap Memory"]
+    end
+
+    subgraph SpringBootEnterprise["Spring Boot Enterprise Architecture"]
+        SB_Entity["JPA Entities (@Entity) & Tables"]
+        SB_DTO["REST API DTOs (@RequestBody, @ResponseBody)"]
+        SB_Repo["Spring Data Repositories (JpaRepository)"]
+        SB_Service["Service Layer Strategy Beans (@Service)"]
+        SB_Audit["Base Auditable Entities (@MappedSuperclass)"]
+        SB_Context["Spring ApplicationContext & Bean Metadata"]
+        SB_Requests["Tomcat Request Threads (ThreadLocal Stack)"]
+    end
+
+    CJ_Class --> SB_Entity
+    CJ_Encapsulation --> SB_DTO
+    CJ_Interface --> SB_Repo
+    CJ_Polymorphism --> SB_Service
+    CJ_Inheritance --> SB_Audit
+    CJ_ClassLoader --> SB_Context
+    CJ_StackHeap --> SB_Requests
+```
+
+---
+
+## 16. Interactive Quizzes, Code Brain Teasers & Debugging Challenges
+
+Test your mastery with these technical scenarios. Click each section to reveal the in-depth architectural explanation:
+
+<details>
+<summary><b>🧠 Question 1: What happens if you unbox a null <code>Integer</code> wrapper into an <code>int</code>?</b></summary>
+
+```java
+Integer customerPoints = null;
+int points = customerPoints;
+```
+**Answer**: It throws a `java.lang.NullPointerException` at runtime!
+**Why**: When compiling `int points = customerPoints;`, the Java compiler automatically synthesizes an unboxing call: `int points = customerPoints.intValue();`. Because `customerPoints` is `null`, invoking `.intValue()` on a null reference crashes the JVM stack frame immediately. Always ensure defensive null checks before unboxing!
+</details>
+
+<details>
+<summary><b>🧠 Question 2: Why can't a <code>static</code> method be overridden in Java?</b></summary>
+
+**Answer**: Because static methods belong to the **Class Metadata in Metaspace**, not to individual object instances in the Heap!
+**Why**: Method overriding requires **runtime dynamic dispatch**, where the JVM inspects the object's virtual method table (V-Table) in Heap at runtime. Static methods are bound at **compile-time** by the compiler based strictly on the declared reference type. When a child class declares an identical static method, it is **Method Hiding**, not overriding!
+</details>
+
+<details>
+<summary><b>🧠 Question 3: Can you place <code>this()</code> or <code>super()</code> on line 2 of a constructor?</b></summary>
+
+**Answer**: NO! The Java compiler strictly enforces that `this()` or `super()` must be the **very first statement** inside a constructor.
+**Why**: An object must establish its valid baseline parent state before executing any custom child field initializations. Allowing code before `super()` could result in a child method accessing uninitialized parent state, leading to catastrophic runtime memory inconsistency.
+</details>
+
+<details>
+<summary><b>🧠 Question 4: Spot the Bug in this Bank POJO!</b></summary>
+
+```java
+public class Account {
+    private double balance;
+    public void Account(double bal) { // Spot the bug!
+        this.balance = bal;
+    }
+}
+```
+**Answer**: Specifying a return type (`void`) on what looks like a constructor converts it into an ordinary method!
+**Why**: Constructors NEVER have a return type, not even `void`. Because `void Account(double bal)` is treated as a method, the compiler generates a default no-arg constructor `public Account()`. When calling `new Account(500.0)`, code will fail to compile!
+</details>
+
+<details>
+<summary><b>🧠 Question 5: What is the output of <code>c1 == c2</code> vs <code>c1.equals(c2)</code>?</b></summary>
+
+```java
+Customer c1 = new Customer(101, "Aarav");
+Customer c2 = new Customer(101, "Aarav");
+System.out.println(c1 == c2);
+System.out.println(c1.equals(c2)); // Assuming equals() is NOT overridden
+```
+**Answer**: Both output `false`!
+**Why**: `c1 == c2` compares physical Heap memory addresses (which are distinct). If `equals()` has not been overridden in `Customer`, it inherits the default `java.lang.Object.equals()` method, which simply delegates to `==` address comparison! To compare content, you must explicitly override `equals()` and `hashCode()`.
+</details>
+
+---
+
+## 17. Structured 4-Stage Learning Roadmap & Progress Checklist
+
+Use this roadmap to track your journey toward becoming an elite Java Backend Engineer:
+
+### Phase 1: Foundational Syntax & JVM Mechanics (Beginner)
+- [ ] Understand `.java` $	o$ `javac` $	o$ `.class` $	o$ JVM execution pipeline
+- [ ] Master IT Standard Naming Conventions (`PascalCase`, `camelCase`, `UPPER_SNAKE_CASE`)
+- [ ] Memorize the 8 primitive data types, bit sizes, and min/max ranges
+- [ ] Differentiate between Widening (safe) and Narrowing (overflow risk) type casting
+- [ ] Implement robust short-circuit null guards using `&&` and `||`
+- [ ] Master all 4 loop variations (`for`, `while`, `do-while`, `for-each`) and labeled break/continue
+
+### Phase 2: Object-Oriented Architecture & Memory Model (Intermediate)
+- [ ] Visualize Stack Frames vs Heap Memory vs Metaspace
+- [ ] Track reference pointer aliasing (`c2 = c1`) in memory
+- [ ] Understand the 10-step Java program execution lifecycle
+- [ ] Implement constructor overloading and `this()` constructor chaining
+- [ ] Eliminate variable shadowing using the `this.` keyword
+- [ ] Build production-grade JavaBeans/POJOs with private fields and defensive setters
+
+### Phase 3: Advanced OOP, Contracts & Polymorphism (Advanced)
+- [ ] Implement single and multilevel inheritance hierarchies with `extends`
+- [ ] Understand why `java.lang.Object` is the root ancestor of all classes
+- [ ] Master the 9 inherited methods of `Object` (`toString()`, `equals()`, `hashCode()`, etc.)
+- [ ] Implement the `equals()` and `hashCode()` contract for domain models
+- [ ] Perform constructor chaining to parent classes using `super(...)`
+- [ ] Master method overloading rules and primitive type promotion hierarchy
+- [ ] Master method overriding rules: access visibility widening & Covariant Return Types
+- [ ] Prove why static methods result in Method Hiding rather than overriding
+
+### Phase 4: Enterprise Abstraction & Spring Boot Readiness (Backend Engineer)
+- [ ] Differentiate between Abstract Classes (partial) and Interfaces (contracts)
+- [ ] Implement default and static methods in Java interfaces
+- [ ] Build loosely coupled systems by coding to interfaces rather than concrete implementations
+- [ ] Implement the Strategy Pattern for pluggable backend components (PaymentGateways, Notifiers)
+- [ ] Enforce encapsulation security using the 4-tier Access Modifier Matrix
+- [ ] Map Core Java concepts directly to Spring Boot `@Entity`, `@Service`, `@Repository`, and DTOs
+
+---
+
+## 18. Top 25 Backend Engineering Interview Questions & Master Cheat-Sheet
+
+| # | Question | Short Model Answer |
+| :---: | :--- | :--- |
+| **1** | Why is Java platform independent? | Source code compiles to intermediate bytecode (`.class`), executed by OS-specific JVMs. |
+| **2** | What is Metaspace and how does it differ from PermGen? | Metaspace (Java 8+) stores class metadata in native OS memory; avoids fixed PermGen OOM limits. |
+| **3** | Difference between Stack and Heap memory? | Stack stores thread-private method execution frames & local primitives; Heap stores shared objects. |
+| **4** | Is Java pass-by-reference or pass-by-value? | **Strictly pass-by-value 100% of the time**. Object references pass a copy of the pointer address. |
+| **5** | What is the `equals()` and `hashCode()` contract? | If `a.equals(b)` is `true`, then `a.hashCode() == b.hashCode()` MUST be `true`. |
+| **6** | What is a Covariant Return Type? | Overriding child method returning a subtype of the parent method's return type. |
+| **7** | Can static methods be overridden? | **No**. Declaring same static method in child results in **Method Hiding**, bound at compile time. |
+| **8** | Difference between `this` and `this()`? | `this` is a reference pointer to current instance; `this()` is a constructor chaining call. |
+| **9** | What is a POJO and JavaBean? | Plain Old Java Object with private fields, public no-arg constructor, and getters/setters. |
+| **10** | What is the diamond problem and how does Java avoid it? | Multiple class inheritance ambiguity; Java avoids it by permitting multiple interfaces only. |
+| **11** | Difference between `break` and `continue`? | `break` exits the loop entirely; `continue` skips to the next iteration. |
+| **12** | What happens if you unbox a null wrapper? | Throws `java.lang.NullPointerException` at runtime. |
+| **13** | What are the 4 pillars of OOP? | Encapsulation, Inheritance, Polymorphism, Abstraction. |
+| **14** | When does a static block execute? | Automatically once when the class is loaded into Metaspace by the ClassLoader. |
+| **15** | When does an instance block execute? | On every `new` instantiation, immediately before the constructor executes. |
+| **16** | Difference between `==` and `equals()`? | `==` compares reference addresses; `equals()` compares object state/attributes. |
+| **17** | Can a top-level class be `private`? | **No**, top-level classes can only be `public` or `default` (package-private). |
+| **18** | Why use `long` or `BigDecimal` for currency? | Floating-point primitives (`float`/`double`) suffer from IEEE 754 precision rounding errors. |
+| **19** | What is the default constructor? | Compiler-generated no-arg constructor, provided ONLY if zero constructors exist in class. |
+| **20** | What is the String Constant Pool? | Special memory area in Heap that stores unique String literals to optimize memory. |
+| **21** | What does `super()` do? | Calls the immediate parent class constructor; must be line 1 of child constructor. |
+| **22** | Can abstract classes have constructors? | **Yes**, to initialize abstract class state when invoked via subclass `super()`. |
+| **23** | What is dynamic method dispatch? | Mechanism where a call to an overridden method is resolved at runtime based on Heap object. |
+| **24** | What is integer overflow in type casting? | Exceeding primitive bit bounds causes 2's complement wraparound (e.g., `(byte)130 == -126`). |
+| **25** | How does OOP connect to Spring Boot? | Interfaces power Services/Repositories, POJOs power DTOs/Entities, DI powers Polymorphism. |
+
+---
+
+<div align="center">
+  <b>🎓 Happy Learning & Happy Engineering!</b><br>
+  <i>Master the fundamentals, build resilient distributed architectures, and write world-class Java code.</i>
+</div>
