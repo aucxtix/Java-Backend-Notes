@@ -1,0 +1,185 @@
+IT standard naming conventions in java
+---------------------------------------
+
+1. packages -> camelCaseConvention
+
+   packageNameConvention
+   
+
+2. class/interface/enums   -> PascalCase
+   
+     ClassNameConvention
+   
+
+3. variables -> camelCaseConvention
+
+    variableNameConvention
+
+4. constants -> all caps
+      
+       ALL_CONSTANTS_CAPS
+
+5. methods -> camelCaseConvention
+    methodNameConvention()
+    
+    
+ -------------------------------------------------
+ Variables
+ ---------
+ 
+ Primitive  
+ ----------
+ 
+Data Type	Size	Value Range	Default Value
+byte	8 bits (1 byte)	-128 to 127	0
+short	16 bits (2 bytes)	-32,768 to 32,767	0
+int	32 bits (4 bytes)	-2,147,483,648 to 2,147,483,647 (-2³¹ to 2³¹-1)	0
+long	64 bits (8 bytes)	-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (-2⁶³ to 2⁶³-1)	0L
+float	32 bits (4 bytes)	Approximately ± 1.4 × 10⁻⁴⁵ to ± 3.4028235 × 10³⁸ (6–7 decimal digits)	0.0f
+double	64 bits (8 bytes)	Approximately ± 4.9 × 10⁻³²⁴ to ± 1.7976931348623157 × 10³⁰⁸ (15 decimal digits)	0.0d
+char	16 bits (2 bytes)	0 (\u0000) to 65,535 (\uffff) — unsigned Unicode characters	\u0000
+boolean	1 bit (JVM dependent)	true or false	false
+
+byte->short->int->long->float->double
+      char ->
+ 
+ 65,536
+ 2^16
+  
+ Non Primitive
+ ---------------
+ String
+ UserDefined
+ Enum
+ 
+ -Wrapper
+ Byte
+ Short
+ Integer
+ Long
+ Float
+ Double
+ Character
+ Boolean
+ 
+ 
+ methods in java
+ ------------------
+ 
+ a block of code that has a name and return type 
+ that performs some operation and returns with or without a value
+ upon invocation.
+ 
+ Programming Paradigm
+ -----------------------
+OOP-> it is a programming paradigm that is used to solve real world problems
+by treating every thing in the problem as objects
+
+
+ 
+ Object
+ ------
+ Object is any entity that has its own properties/state or function/behaviour
+
+ class
+ -----
+ a java definition block that is used to define states and behaviour of an object
+ states are handled using variables , behaviour is handled using methods.
+
+ class Customer
+ {
+    custId
+    custName
+    custEmail
+    custAddr
+    custNum
+    
+    
+    login()
+    logout()
+    addTo()
+    payment()
+ }
+ 
+ What all can be written in a java class?
+ -------------------------------------------
+ 
+ variables
+ methods
+ blocks static/non staic
+ constructors
+ nested classes/interface/enums
+ 
+ inside a class 
+ 
+ 1. declare and initialize static/non static varibles
+ 2. declare and define static/non static methods
+ 3. Constructors
+ 4. Blocks static/non static
+ 
+ 
+ Constructor
+ -----------
+ Special type of a method which has same name as that of the class, no return type
+ no access specifiers like(static, strictfp,default,final)
+ 
+ If a class doesn't have a constructor a default constr will be introduced by the compiler
+ 
+ constructors are called when the object is created.
+ 
+ constr used for initializing non static variables
+ 
+ steps of java program execution
+ ---------------------------------
+ 1. .java -> compile -> .class -> jvm
+ 2. class loading(bootstrap,extension,application-> linking -> initialization)
+ 3. scan all static members and load in meta space
+ 4. execute static block
+ 5. call main
+ 6. static members are ready to use
+ 7. obj creation 
+ 8. non static block execute // rarely used for intialiaton of non static members
+ 9. constructor executes // freq used for intialiaton of non static members
+ 10. non static elements ready to use
+ ----------------------------------------
+ 
+ 
+ Overloading
+ --------------
+ 
+ 1. wrt methods
+ 
+ writing same name with diff signature
+ 
+ signature = type of parameter, number of parameter and order of occuarance of parameter
+ 
+ 
+ 2. wrt Constructors
+ writing multiple constructors with diff signatures
+ 
+ 
+ this kw                     |            this method
+ 
+----------------------------------------------------------
+this kw is used to refer to              to call one constructor from another within same class
+current obj instance members             this should always be first line inside a const
+to overcome shadowing prob
+when local vs name is = instance
+var name
+
+ super kw                                 super method
+ ---------------------------------------------------------------
+ 
+ 
+ 4 Pillars or object oriented Programming in Java
+ --------------------------------------------------
+ 1. Inheritence
+ 2. encapsulation
+ 3. polymorphism
+ 4. Abstraction
+ 
+ 
+ 
+ 
+ 
+ 
