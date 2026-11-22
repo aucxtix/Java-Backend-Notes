@@ -1,0 +1,305 @@
+IT standard naming conventions in java
+---------------------------------------
+
+1. packages -> camelCaseConvention
+
+   packageNameConvention
+   
+
+2. class/interface/enums   -> PascalCase
+   
+     ClassNameConvention
+   
+
+3. variables -> camelCaseConvention
+
+    variableNameConvention
+
+4. constants -> all caps
+      
+       ALL_CONSTANTS_CAPS
+
+5. methods -> camelCaseConvention
+    methodNameConvention()
+    
+    
+ -------------------------------------------------
+ Variables
+ ---------
+ 
+ Primitive  
+ ----------
+ 
+Data Type	Size	Value Range	Default Value
+byte	8 bits (1 byte)	-128 to 127	0
+short	16 bits (2 bytes)	-32,768 to 32,767	0
+int	32 bits (4 bytes)	-2,147,483,648 to 2,147,483,647 (-2³¹ to 2³¹-1)	0
+long	64 bits (8 bytes)	-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 (-2⁶³ to 2⁶³-1)	0L
+float	32 bits (4 bytes)	Approximately ± 1.4 × 10⁻⁴⁵ to ± 3.4028235 × 10³⁸ (6–7 decimal digits)	0.0f
+double	64 bits (8 bytes)	Approximately ± 4.9 × 10⁻³²⁴ to ± 1.7976931348623157 × 10³⁰⁸ (15 decimal digits)	0.0d
+char	16 bits (2 bytes)	0 (\u0000) to 65,535 (\uffff) — unsigned Unicode characters	\u0000
+boolean	1 bit (JVM dependent)	true or false	false
+
+byte->short->int->long->float->double
+      char ->
+ 
+ 65,536
+ 2^16
+  
+ Non Primitive
+ ---------------
+ String
+ UserDefined
+ Enum
+ 
+ -Wrapper
+ Byte
+ Short
+ Integer
+ Long
+ Float
+ Double
+ Character
+ Boolean
+ 
+ 
+ methods in java
+ ------------------
+ 
+ a block of code that has a name and return type 
+ that performs some operation and returns with or without a value
+ upon invocation.
+ 
+ Programming Paradigm
+ -----------------------
+OOP-> it is a programming paradigm that is used to solve real world problems
+by treating every thing in the problem as objects
+
+
+ 
+ Object
+ ------
+ Object is any entity that has its own properties/state or function/behaviour
+
+ class
+ -----
+ a java definition block that is used to define states and behaviour of an object
+ states are handled using variables , behaviour is handled using methods.
+
+ class Customer
+ {
+    custId
+    custName
+    custEmail
+    custAddr
+    custNum
+    
+    
+    login()
+    logout()
+    addTo()
+    payment()
+ }
+ 
+ What all can be written in a java class?
+ -------------------------------------------
+ 
+ variables
+ methods
+ blocks static/non staic
+ constructors
+ nested classes/interface/enums
+ 
+ inside a class 
+ 
+ 1. declare and initialize static/non static varibles
+ 2. declare and define static/non static methods
+ 3. Constructors
+ 4. Blocks static/non static
+ 
+ 
+ Constructor
+ -----------
+ Special type of a method which has same name as that of the class, no return type
+ no access specifiers like(static, strictfp,default,final)
+ 
+ If a class doesn't have a constructor a default constr will be introduced by the compiler
+ 
+ if we have a user defined constr then default constr will not be introduced
+ 
+ constructors are called when the object is created.
+ 
+ constr used for initializing non static variables
+ 
+ steps of java program execution
+ ---------------------------------
+ 1. .java -> compile -> .class -> jvm
+ 2. class loading(bootstrap,extension,application-> linking -> initialization)
+ 3. scan all static members and load in meta space
+ 4. execute static block
+ 5. call main
+ 6. static members are ready to use
+ 7. obj creation 
+ 8. non static block execute // rarely used for intialiaton of non static members
+ 9. constructor executes // freq used for intialiaton of non static members
+ 10. non static elements ready to use
+ ----------------------------------------
+ 
+ 
+ Overloading
+ --------------
+ 
+ 1. wrt methods
+ 
+ writing same name with diff signature
+ 
+ signature = type of parameter, number of parameter and order of occuarance of parameter
+ 
+ 
+ 2. wrt Constructors
+ writing multiple constructors with diff signatures
+ 
+ 
+ this kw                     |            this method
+ 
+----------------------------------------------------------
+this kw is used to refer to              to call one constructor from another within same class
+current obj instance members             this should always be first line inside a const
+to overcome shadowing prob
+when local vs name is = instance
+var name
+
+ super kw                                 super method
+ ---------------------------------------------------------------
+
+ 4 Pillars or object oriented Programming in Java
+ --------------------------------------------------
+ 1. Inheritence
+    -----------
+    Acquiring the properties of parent/Base/Super class to child/Derieved/Sub
+    
+    
+    Important points wrt inheritence
+    ---------------------------------
+    
+ 1. Every class in java is a subclass of Object class directly or indirectly
+ 
+    No class in java is ever  empty , it will have default constr + 9 
+    Object class methods 
+     
+ 2.  Members of a class that do not participate in inheritance
+     private members
+     Constructors  
+     Blocks 
+ 
+ 3.  Object class methods:
+ --------------------------
+ hashCode() - > int number calc out of the hexa decimal address of an object
+ equals()   - > compares the address of 2 objects overridden in child class to compare content of the object
+ toString() - > return FullyQualified@Namehexadecimaladdr  overriden in child to to print the content of the object in the form of string
+ clone()
+ wait()*3
+ notify()
+ notifyAll()
+ 
+ Constr chaining super()
+ calling immediate parent class constructer using super method 
+ const chaining happens implicitly if  no arg or we can perform explicitly with args
+ 
+ 
+ 
+ Implicit constr chaining.
+ 
+ super kw
+ used to refer immediate parent varible/method if they have same name as child class
+ 
+    
+
+ 2. encapsulation
+ ----------------
+ An encapsulated class is basically binding data members with the member function
+ 
+ POJO or BEan class
+ is basically writing a java object to have private members
+ public constr + public getter and setter.
+ 
+ 3. polymorphism
+ ----------------
+ poly= many
+ morph= forms
+ 
+ ability of a java object to show multiple forms in different stages 
+ 
+ 
+ 2 Types
+ 
+ 1. compile time/static polymorphism
+ --------------------
+ Binding of method declaration with method definition occurs compile time
+ example : constr method overloading
+ 
+ 
+ 2. runtime/dynamic polymorphism
+  Binding of method declaration with method definition occurs run time
+ example: method overriding.
+ 
+ Overriding
+ -----------
+ 
+ changin parents class non static methods implementation inside the child class is called overriding
+ 
+ Rules
+ 
+ 1. name and params must be same
+ 2. wrt access modifiers while overriding a method visibility can be increased or kept same but cannot be decresed
+ 
+ Parent  :   public     protected           default                   private
+ 
+ Child   :   public     protected/public   default/protected/public   cannot be overriden cause its not inherited
+ 
+ 3.  wrt return type
+ 
+ primitive->     void + int float    Cannot change
+ 
+ non primtive -> Co variant types allowed to change
+                 contra variant types are not allowed
+ 
+ 4. wrt final
+ ------------------
+          -> variable => variable cannot be re assigned   (they are inherited)
+    final -> method   => cannot be overriden               (they are inherited)
+          -> class   =>  cannot have child class
+ 
+ 5. wrt static
+ 
+    static methods canot be overriden because they are not diff for diff instances of the same class
+    althouh it looks like overriding its not its called method hiding.
+ 
+ 6. wrt abstract
+ 
+ abstract can be overridden as concrete and concrete can be overidden as abstarct
+ 
+ 
+ 
+ 
+ Accessmodifiers wrt vars and methods
+ ---------------------------------------
+ 
+ private - > any member marked as private its accessible only inside the class its declared in
+ default - > any member left default is accessible only inside the package its declared in
+ protected -> same as default + but can be accesed outside the package by inheriting its constituent class
+ public -> access throught the project by importing
+ 
+ 
+ Note: for a class only Public and default are allowed (unless its inner class)
+ 
+ 4. Abstraction
+ --------------------
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
